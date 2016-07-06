@@ -1,0 +1,150 @@
+/*.container {
+  margin: 20px auto;
+  width: 600px;
+  padding: 0px 20px 20px 20px;
+  border: 1px dotted black;
+}*/
+.container {
+	font-size: xx-large;
+    font-family: -webkit-body;
+    font-style: italic;
+    text-align: -webkit-center;
+}
+th {
+  text-align: left;
+}
+
+body {
+	background-image: url("/background.png");
+	color: black;
+	font-size:	medium;
+}
+
+#log {
+
+}
+
+
+#flash { 
+	background-image: url("https://abs.twimg.com/a/1466057877/img/t1/lohp_streams_header_bg_v4.png");
+	width: 100%;
+	height: auto;
+	text-align: center;
+	color: white;
+	font-size: -webkit-xxx-large;
+	padding: 20px;
+	font-family: monospace;
+
+}
+
+h1 {
+	text-align: center;
+	color: #98F;
+}
+
+h2 {
+	color: #ECF0F1;
+}
+
+h3 {
+	color: #F89648;
+	text-align: center;	
+}
+
+h4 {
+	color: #F89;
+	text-align: center;	
+}
+
+div {
+	border-radius: 40px;
+}
+
+div #prime {
+	padding: 200px 500px;
+	text-align: center;
+	color: #946;
+}
+
+#tweet {
+	margin: 20px auto;
+	height: 200px;
+	background-image: url("/tweet.jpg");
+}
+
+#handler {
+	margin: 20px auto;
+	height: 200px;
+	background-image: url("/search.png");
+}
+
+#tweet_new {
+	margin: 20px auto;
+	height: 200px;
+	background-image: url("/new_tweet.gif");
+}
+
+input[type=text]{
+	margin: auto;
+	color: #ECF0F1;
+	font-family: cursive;
+	padding: 10px;
+	border-radius: 20px;
+	width: 50%;
+	height: 70px;
+	background-color: #73BFB8;
+	display: inline-block;
+	opacity: 0.9;
+  filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+
+input[type=submit]{
+	border-radius: 10px;
+	background-color: #ECF0F1;
+	color: #2678AD;
+	padding: 5px;
+
+}
+
+#new_tweet {
+	display: none;
+	margin: 20px auto;
+	height: 100px;
+	width: 50%;
+	background-image: url("/list.jpg");
+	text-align: center;
+
+}
+
+
+#list_tweet {
+	
+	margin: 20px auto;
+	height: 200px;
+	width: 60%;
+	background-image: url("/list.jpg");
+	text-align: center;
+}
+
+
+#list_says {
+	
+	margin: 20px auto;
+	height: 200px;
+	width: 60%;
+	background-image: url("/list2.jpg");
+	text-align: center;
+}
+
+.button {
+	border-radius: 10%;
+	background-color: #F89;
+	color: white;
+}
+
+
+a {
+	text-decoration: none;
+	color: white;
+
+}

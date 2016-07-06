@@ -1,0 +1,44 @@
+Aquí deberás crear tus modelos
+
+Puedes utilizar el comando de rake: 
+
+rake generate:model NAME=Twitter_User
+rake generate:model NAME=Tweet
+
+
+rake generate:migration NAME=create_twitter_users
+rake generate:migration NAME=create_tweets
+
+
+# def self.show_urls_user(id)
+#     User.find(id).urls.order(created_at: :desc)
+#   end
+
+#   def self.search_url(short)
+#    url = Url.find_by("short_url = ?","#{short}")
+#     if url != nil
+#       url
+#     else
+#       nil
+#     end      
+#   end
+# end
+
+
+
+
+# def collect_with_max_id(collection=[], max_id=nil, &block)
+#   response = yield(max_id)
+#   collection += response
+#   response.empty? ? collection.flatten : collect_with_max_id(collection, response.last.id - 1, &block)
+# end
+
+# def client.get_all_tweets(user)
+#   collect_with_max_id do |max_id|
+#     options = {count: 200, include_rts: true}
+#     options[:max_id] = max_id unless max_id.nil?
+#     user_timeline(user, options)
+#   end
+# end
+
+# client.get_all_tweets("sferik")

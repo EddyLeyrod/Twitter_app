@@ -1,0 +1,24 @@
+
+<h3>Los nuevos tweets de <%=@full_name%></h3> <button class="button"><a href="/">Regresar</a></button>
+<%if @time_tweet_user%>
+	<%@time_tweet_user.each do |t| %>
+		<div id ="list_tweet">
+			<h4><%=t.user.screen_name%></h4>
+			<%=p t.text %>
+		</div>
+	<%end%>
+<%end%>
+
+<h3>Donde hablan de "<strong><%=@screen_name%></strong>".</h3>
+
+<%if @tweets_relations%>
+	<%@tweets_relations.each do |t|%>
+	<div id = "list_says">
+		<h4> <%=t.user.screen_name%><br></h4>
+		<%=t.text%>
+	</div>		
+	<%end%>
+<%end%>
+
+<br><br><hr><hr>
+
