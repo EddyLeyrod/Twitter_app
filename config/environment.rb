@@ -20,10 +20,12 @@ require "sinatra/reloader" if development?
 
 require 'erb'
 require 'twitter'
-
+	
 require 'openssl'
 require 'sinatra'
 require 'oauth'
+require 'yaml'
+require 'pp'
 
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
@@ -31,6 +33,12 @@ OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 APP_ROOT = Pathname.new(File.expand_path('../../', __FILE__))
 
 APP_NAME = APP_ROOT.basename.to_s
+
+env_config = YAML.load_file(APP_ROOT.join('config', 'twitter.yaml'))
+
+env_config.each do |key, value|
+  ENV[key] = value
+end
 
 # Configura los controllers y los helpers
 Dir[APP_ROOT.join('app', 'controllers', '*.rb')].each { |file| require file }
@@ -41,8 +49,8 @@ Dir[APP_ROOT.join('app', 'uploaders', '*.rb')].each { |file| require file }
 require APP_ROOT.join('config', 'database')
 
 CLIENT = Twitter::REST::Client.new do |config|
-  config.consumer_key        = "i60kKMg8TmviwcowX1ylg0qfX"
-  config.consumer_secret     = "cwPlytnJtFX99tgYw8cGb6zaaUosS9fAFUSUdiWteZdQ881ul4"
-  config.access_token        = "531892136-9E3UGdCzWFUQcAQxAAD7HcMhypGElU5fF0roYpGP"
-  config.access_token_secret = "d3u9saVhYo4fKbYCCIjpctN8J46Bjd0E2eRR4Aine7yS6"
+  config.consumer_key        = ENV["TWITTER_KEY"]
+  config.consumer_secret     = ENV["TWITTER_SECRET"]
+  config.access_token        = ENV["TOKEN"]
+  config.access_token_secret = ENV["TOKEN_SECRET"]
 end

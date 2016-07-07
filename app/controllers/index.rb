@@ -4,17 +4,35 @@ enable :sessions
 use Rack::Flash
 
 get '/' do
-	flash[:notice] = "Bienvenido"
   erb :index
 end
+
+before '/myapp' do
+	p "entras al before" * 10
+  p email_log = session[:email]
+  if email_log == nil
+     	flash.now[:warning] = "Debes iniciar session"
+    redirect to("/")
+  end
+end
+
+get '/myapp' do 
+	flash[:notice] = "Bienvenido"
+	erb :myapp
+end
+
+
 
 post '/fetch' do
 	handle = params[:handler]  
   #buscar al usuariio en twitter
-  user = CLIENT.user_search(handle).first if handle
+ 	user = CLIENT.user_search(handle).first
+ 
+  	p "*" * 50
+  	
 	#busca al usuario en la base de datos
   if user
-  p  @user_exist = TwitterUser.search_user_handler(user.screen_name)
+    @user_exist = TwitterUser.search_user_handler(user.screen_name)
   else
   	p "*"*50
   	p "no se encontro usuario"
