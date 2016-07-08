@@ -9,17 +9,14 @@ get '/' do
 end
 
 #ruta para buscar usuarios
+#buscar al usuariio en twitter
+#busca al usuario en la base de datos
 post '/fetch' do
 	handle = params[:handler]  
-  #buscar al usuariio en twitter
  	user = CLIENT.user_search(handle).first 
-  	p "*" * 50  	
-	#busca al usuario en la base de datos
   if user
     @user_exist = TwitterUser.search_user_handler(user.screen_name)
   else
-  	p "*"*50
-  	p "no se encontro usuario"
   	flash.now[:warning] = "No encontramos un usuario con ese nombre"  
   end 
 
@@ -30,12 +27,19 @@ post '/fetch' do
   end
 end
 
-#CREAR TWEETS
+
+
+
+#CRENDO LOS TWEETS*
 post '/tweet' do
+	p "recibe tweet"
 	tweet = params[:tweet]
-	p current_user
 	unless tweet == ""
-		current_user.tweet_user_conection.update("#{tweet}")	
+		#current_user.tweet_user_conection.update("#{tweet}") **crea un tweet
+		p tweet_new = TweetUser.new(tweet: tweet, user_id: current_user.id )
+		p "Usuario: #{current_user.name}, id: #{current_user.id}"
+		p "Tweet: #{tweet_new.tweet}, id #{tweet_new.id}"
+		#current_user.tweet_user_conection.update("#{tweet}")	
 		flash.now[:notice] = "Perfecto tu tweet se a creado!!"
 	else
 		flash.now[:notice] = "Vamos escribe algun tweet"
@@ -44,6 +48,9 @@ post '/tweet' do
 	#	redirecciona al twitter del usuario
 	#	redirect to("https://twitter.com/search?q=#{handle}&page=1&count=1")   
 end
+
+
+
 
 			
 get '/handle/:handle' do
@@ -76,7 +83,6 @@ get '/handle/:handle' do
 	end
 end
 
-
 get '/username/:handle' do
 	flash.now[:notice] = "Parece que esto ya lo habias buscado!!!"
 	name = params[:handle]
@@ -92,7 +98,7 @@ get '/username/:handle' do
 		   	Tweet.create(tweets: tweet.text, twitter_user_id: user_handle.id )
 		end		
 		erb :tweets
-	else
+	else	
   	  # "usuario con tweets en la base se manda el cache"  	
   	  #"VERIFICAR SI LOS TWEETS ESTAS ACTUALIZADOS"  	
   		#"**********ultimo_tweet_base de datos********" 

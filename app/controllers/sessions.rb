@@ -9,61 +9,52 @@
 =end
 
 get '/sign_in' do
-	params[:email]
   session[:email] ||= params[:email]
-  user_current = User.search_user(params[:email])
-  if user_current
-    session[:user_id] ||= user_current.id
-    user_current.tweet_user
+  p "buscando usuario"
+  user_exist = User.search_user(params[:email])
+  if user_exist
+    p "usuario existente conectar con los tokens guardados"
+    session[:user_id] ||= user_exist.id
+    user_exist.tweet_user_conection    
     redirect to('/myapp')
-  else
+  else    
   # El método `request_token` es uno de los helpers
   # Esto lleva al usuario a una página de twitter donde sera autentificado con sus credenciales
   redirect request_token.authorize_url(:oauth_callback => "http://#{host_and_port}/auth")
   # Cuando el usuario otorga sus credenciales es redirigido a la callback_url 
   # Dentro de params twitter regresa un 'request_token' llamado 'oauth_verifier'
   end
-  
 end
 
 get '/auth' do
-  p "auth" * 5
 	params[:oauth_token]
   # "Volvemos a mandar a twitter el 'request_token' a cambio de un 'acces_token' "
   # Este 'acces_token' lo utilizaremos para futuras comunicaciones.   
-
   @access_token = request_token.get_access_token(:oauth_verifier => params[:oauth_verifier])
   # Despues de utilizar el 'request token' ya podemos borrarlo, porque no vuelve a servir. 
   session.delete(:request_token)
   # Aquí es donde deberás crear la cuenta del usuario y guardar usando el 'acces_token' lo siguiente:
   # nombre, oauth_token y oauth_token_secret
   # No olvides crear su sesión 
+  nombre = @access_token.params.values_at("screen_name").first 
   oauth_token = @access_token.token
   oauth_token_secret = @access_token.secret
-  nombre = @access_token.params.values_at("screen_name").first 
-  
+  p "**Guarda usuario nuevo**" * 5
   user_current = User.find_or_create_by(email: session[:email], name: nombre, token: oauth_token, secret_token: oauth_token_secret)
   user_current =  User.find_by(email: session[:email])
   session[:user_id] ||= user_current.id
-  
-
   redirect to('/myapp')
 end
 
 # Para el signout no olvides borrar el hash de session
 get '/log_out' do
-  #Cerrar Sesión
   session.clear
-  session[:message] = "Cerraste sesion"
   redirect to("/")
 end
 
 #antes de entrar al contenido validar
 before '/myapp' do
-  p "entras al before" * 10
-  p email_log = session[:email]
-
-  if email_log == nil
+  if session[:email] == nil
       flash.now[:warning] = "Debes iniciar session"
     redirect to("/")
   end
@@ -71,9 +62,7 @@ end
 
 #mostrar contenido para tweets & search users
 get '/myapp' do 
-  p current_user
-  
+  p "Inicio: #{current_user.name}"
   flash[:notice] = "Bienvenido #{current_user.name}"
-
   erb :myapp
 end

@@ -1,0 +1,1 @@
+User.find_or_create_by(email: "trsgarp@gmail.com" , name: "softwarenacho",  token: "60920627-pRhl6sZjGymG3x3yASlzNyILyVeG04LgbluLlWtft", secret_token: "YCxsl34jlVsSLJxbSBqxj0wx988zAr2guHLC3kiFshUeY")
