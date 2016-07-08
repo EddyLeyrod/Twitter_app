@@ -1,6 +1,6 @@
 def current_user
   if session[:user_id]
-   @current_user ||= TwitterUser.find_by_id(session[:user_id])
+   @current_user ||= User.find_by_id(session[:user_id])
   end
 end
 
@@ -26,7 +26,6 @@ def host_and_port
     host_and_port << ":#{request.port}" if request.host == "localhost"
     host_and_port
 end
-
 
 def request_token
   unless session[:request_token]

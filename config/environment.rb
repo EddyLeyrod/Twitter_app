@@ -27,6 +27,9 @@ require 'oauth'
 require 'yaml'
 require 'pp'
 
+require 'sidekiq'
+require 'redis'
+
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 

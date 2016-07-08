@@ -3,33 +3,17 @@ require 'rack-flash'
 enable :sessions
 use Rack::Flash
 
+#inde pricipal
 get '/' do
   erb :index
 end
 
-before '/myapp' do
-	p "entras al before" * 10
-  p email_log = session[:email]
-  if email_log == nil
-     	flash.now[:warning] = "Debes iniciar session"
-    redirect to("/")
-  end
-end
-
-get '/myapp' do 
-	flash[:notice] = "Bienvenido"
-	erb :myapp
-end
-
-
-
+#ruta para buscar usuarios
 post '/fetch' do
 	handle = params[:handler]  
   #buscar al usuariio en twitter
- 	user = CLIENT.user_search(handle).first
- 
-  	p "*" * 50
-  	
+ 	user = CLIENT.user_search(handle).first 
+  	p "*" * 50  	
 	#busca al usuario en la base de datos
   if user
     @user_exist = TwitterUser.search_user_handler(user.screen_name)
@@ -46,13 +30,13 @@ post '/fetch' do
   end
 end
 
-#crecaion de tweets
+#CREAR TWEETS
 post '/tweet' do
 	tweet = params[:tweet]
+	p current_user
 	unless tweet == ""
-		CLIENT.update("#{tweet}")	
+		current_user.tweet_user_conection.update("#{tweet}")	
 		flash.now[:notice] = "Perfecto tu tweet se a creado!!"
-		
 	else
 		flash.now[:notice] = "Vamos escribe algun tweet"
 		erb :index		
@@ -92,13 +76,13 @@ get '/handle/:handle' do
 	end
 end
 
+
 get '/username/:handle' do
 	flash.now[:notice] = "Parece que esto ya lo habias buscado!!!"
 	name = params[:handle]
 	user_handle = TwitterUser.find_by(twitter_handle: "#{name}")
 	@name_handle = user_handle.twitter_handle
 	@tweets_user = user_handle.tweets
-
 
   if @tweets_user.empty?
   	flash.now[:warning] = "Pero no hay tweets, vamos por ellos"  
@@ -109,7 +93,6 @@ get '/username/:handle' do
 		end		
 		erb :tweets
 	else
-		
   	  # "usuario con tweets en la base se manda el cache"  	
   	  #"VERIFICAR SI LOS TWEETS ESTAS ACTUALIZADOS"  	
   		#"**********ultimo_tweet_base de datos********" 

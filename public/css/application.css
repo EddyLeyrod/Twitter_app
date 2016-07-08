@@ -34,7 +34,6 @@ body {
 	font-size: -webkit-xxx-large;
 	padding: 20px;
 	font-family: monospace;
-
 }
 
 h1 {
@@ -44,6 +43,10 @@ h1 {
 
 h2 {
 	color: #ECF0F1;
+	background-image: url("https://abs.twimg.com/a/1466057877/img/t1/lohp_streams_header_bg_v4.png");
+	/*background-color: orange;*/
+	margin: 20px 900px 20px 900px;
+	border-radius: 20px;
 }
 
 h3 {

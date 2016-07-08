@@ -1,5 +1,7 @@
 source :rubygems
-
+#segundo plano
+gem 'sidekiq'
+gem 'redis'
 # PostgreSQL driver
 gem 'twitter'
 gem 'oauth'
