@@ -29,6 +29,8 @@ require 'pp'
 
 require 'sidekiq'
 require 'redis'
+require 'sidekiq/api'
+
 
 
 OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE

@@ -27,20 +27,15 @@ post '/fetch' do
   end
 end
 
-
-
-
 #CRENDO LOS TWEETS*
 post '/tweet' do
-	p "recibe tweet"
+	p "**Post tweet"
 	tweet = params[:tweet]
 	unless tweet == ""
-		#current_user.tweet_user_conection.update("#{tweet}") **crea un tweet
-		p tweet_new = TweetUser.new(tweet: tweet, user_id: current_user.id )
 		p "Usuario: #{current_user.name}, id: #{current_user.id}"
-		p "Tweet: #{tweet_new.tweet}, id #{tweet_new.id}"
-		#current_user.tweet_user_conection.update("#{tweet}")	
+		#current_user.tweet_user_conection.update("#{tweet}")
 		flash.now[:notice] = "Perfecto tu tweet se a creado!!"
+  	current_user.tweet_later(tweet)
 	else
 		flash.now[:notice] = "Vamos escribe algun tweet"
 		erb :index		
@@ -49,7 +44,11 @@ post '/tweet' do
 	#	redirect to("https://twitter.com/search?q=#{handle}&page=1&count=1")   
 end
 
-
+get '/status/:job_id' do
+	p "**get status"
+  # regresa el status de un job a una petición AJAX
+  p "#{job_is_complete(params[:job_id])}"
+end
 
 
 			
@@ -126,4 +125,11 @@ get '/username/:handle' do
   		end #EACH TWEETS UPDATES   		
   erb :tweets
 	end#if empty?
+end
+
+
+get '/tweets/:id_user' do 
+	p @tweets_users = User.find(params[:id_user]).tweet_users.order(id: :desc)
+	flash.now[:notice] = "Mis tweets"
+	erb :user_tweets
 end

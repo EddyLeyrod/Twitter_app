@@ -4,29 +4,56 @@ $(document).ready(function() {
 	// Esto garantiza que si amarramos(bind) una función a un elemento 
 	// de HTML este exista ya en la página. 
 
+  job_id ="";
 
-$('#update_tweets').click(function() {
+
+  $('#update_tweets').click(function() {
     location.reload(); //actualiza nuevos tweets
-});
+  });
 
-$( "#form_tweet" ).on( "submit", function( event ) {
-    alert("Tu tweet va ser creado");
+  $(".loading").hide();
+
+  $( "#form_tweet" ).on( "submit", function( event ) {
   	event.preventDefault(); //detenemos el proceso
     var info = $("#form_tweet" ).serialize();//mensaje
     var tweet = $("#tweet_text").val();
-    console.log(info);
-    console.log(tweet);
+     $(".loading").show();
 
     $.post( "/tweet", info ,function( data ) {
-      console.log(data);
-      $( "#flash" ).html(data);
+      console.log("post ajax");
+      $(".loading").hide();
       $( "#new_tweet" ).css("display","block");
       $( "#new_tweet" ).html(tweet);
+      job_id = data
 
-      //$("#tweet").appen('<div id="tweet_new" >'+tweet+'</div><br><br><br><br><br><br>');
+      var interval_check = setInterval(
+        function(){
+
+          $.get("/status/"+job_id, function(data) {
+            console.log("get status ajax");          
+              if(data == "true") {
+                $( "#flash" ).html("Tu tweet a sido posteado");
+                clearInterval(interval_check);
+              }else{
+                console.log("tweet en proceso");          
+              }
+                
+          }); 
+        }
+        , 3000);
+      
     });
-	});
+	});   
 });
+
+
+
+
+
+
+
+
+
 
 // metodo .submit()
 // funciona mandando el valor de un form 

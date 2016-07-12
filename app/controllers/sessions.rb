@@ -15,7 +15,6 @@ get '/sign_in' do
   if user_exist
     p "usuario existente conectar con los tokens guardados"
     session[:user_id] ||= user_exist.id
-    user_exist.tweet_user_conection    
     redirect to('/myapp')
   else    
   # El método `request_token` es uno de los helpers
@@ -64,5 +63,6 @@ end
 get '/myapp' do 
   p "Inicio: #{current_user.name}"
   flash[:notice] = "Bienvenido #{current_user.name}"
+  
   erb :myapp
 end

@@ -1,0 +1,14 @@
+
+<% if @tweets_users %>
+<button class="button"><a href="/myapp">Regresar</a></button>
+	<% @tweets_users.each do |t| %>
+	<div id ="list_tweet"> 
+		
+		<h3> <%=t.tweet  %></h3>
+	<p>	<%=t.created_at  %></p>
+	</div> 
+		
+	<% end %>
+<% end %>
+
+
