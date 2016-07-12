@@ -32,6 +32,7 @@ post '/tweet' do
 	p "**Post tweet"
 	tweet = params[:tweet]
 	unless tweet == ""
+#		p @tweets_users = User.find(current_user.id).tweet_users.order(id: :desc)
 		p "Usuario: #{current_user.name}, id: #{current_user.id}"
 		#current_user.tweet_user_conection.update("#{tweet}")
 		flash.now[:notice] = "Perfecto tu tweet se a creado!!"
@@ -127,9 +128,10 @@ get '/username/:handle' do
 	end#if empty?
 end
 
-
+=begin
 get '/tweets/:id_user' do 
 	p @tweets_users = User.find(params[:id_user]).tweet_users.order(id: :desc)
 	flash.now[:notice] = "Mis tweets"
 	erb :user_tweets
 end
+=end
